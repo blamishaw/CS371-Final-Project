@@ -57,7 +57,7 @@ class Movie:
     def __repr__(self):
         print(self.matches)
 
-    def printMovies(self):
+    def printMovies(self) -> bool:
         """ Prints the movies with titles matching the user input """
         print("\n****************************************")
 
@@ -86,9 +86,10 @@ class Movie:
             self.movie = self.matches[int(number)-1]
 
             self.info['title'] = (self.movie['id'], self.movie['original_title'])
-            self.info['release_date'] = self.movie['release_date']
+            self.info['release_date'] = self.movie['release_date'][:4]
 
             self.credits = tmdb.Movies(self.matches[int(number)-1]["id"]).credits()
+            self.getInfo()
         except IndexError:
             raise Exception('Index out of range')
 
@@ -96,7 +97,6 @@ class Movie:
         """ Gets the genre of movie """
 
         genres = [genre for genre in self.movie['genre_ids']]
-
         self.info['genres'] = genres
 
     def getDirector(self):
@@ -135,21 +135,24 @@ class Movie:
     def convertInfoToKBFact(self):
         """ Converts self.info into facts that can be parsed by Companions """
 
-        print('\n******** KB FACTS **********\n')
+        print('\n******** KB FACTS **********')
+        movie_title = self.info["title"][1]
         kb_facts = []
+
+        fact = f'(title "{movie_title}")'
+        kb_facts.append(fact)
+
         for key in self.info.keys():
-            if key == 'title':
-                fact = f'(title "{self.info[key][1]}")'
-                kb_facts.append(fact)
+
             if key == 'release_date':
-                fact = f'(releaseDate "{self.info["title"][1]}" {self.info[key]})'
+                fact = f'(releaseDate "{movie_title}" {self.info[key]})'
                 kb_facts.append(fact)
             if key == 'genres':
                 for genre_id in self.info[key]:
-                    fact = f'(genre "{self.info["title"][1]}" {GENRES[genre_id]})'
+                    fact = f'(genre "{movie_title}" {GENRES[genre_id]})'
                     kb_facts.append(fact)
             if key == 'director':
-                fact = f'(director "{self.info["title"][1]}" "{self.info[key][1]}"")'
+                fact = f'(director "{movie_title}" "{self.info[key][1]}"")'
                 kb_facts.append(fact)
             if key == 'cinematographer':
 
@@ -157,17 +160,21 @@ class Movie:
                 if self.info[key][0] == None:
                     continue
 
-                fact = f'(cinematographer "{self.info["title"][1]}" "{self.info[key][1]}"")'
+                fact = f'(cinematographer "{movie_title}" "{self.info[key][1]}"")'
                 kb_facts.append(fact)
             if key == 'actors':
                 for actor in self.info[key]:
-                    fact = f'(actorIn "{self.info["title"][1]}" "{actor[1]}")'
+                    fact = f'(actorIn "{movie_title}" "{actor[1]}")'
                     kb_facts.append(fact)
         for item in kb_facts:
             print(item)
+        print('*************************\n')
 
     def getInfo(self):
-        """ Returns info about the movie in JSON format
+        """ Load all info about the movie in JSON format
         """
-        print(self.info)
-        print('\n')
+        self.getGenres()
+        self.getDirector()
+        self.getCinematorgrapher()
+        self.getActors()
+        self.convertInfoToKBFact()

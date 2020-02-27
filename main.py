@@ -7,15 +7,10 @@ def createInterface():
         user_input = input('Enter movie name:\n')
         movie = movieWrapper.Movie(user_input)
         if not movie.printMovies():
-            return
+            continue
         user_input = input('Which movie is the correct one?\n')
 
         movie.getMovie(user_input)
-        movie.getGenres()
-        movie.getDirector()
-        movie.getCinematorgrapher()
-        movie.getActors()
-        movie.convertInfoToKBFact()
 
         user_input = input("Do you want to continue? ('y'/'n')\n")
 
