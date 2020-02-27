@@ -1,5 +1,5 @@
 import tmdbsimple as tmdb
-from scripts import apiconfig
+import apiconfig
 
 GENRES = {28: "Action",
           12: "Adventure",
@@ -34,6 +34,16 @@ class MovieWrapper:
         self.movie = None
         self.credits = None
 
+        # All data is stored by their tmdb ids for ease of querying the API
+        self.info = {
+            'title': None,
+            'release_date': None,
+            'genres': None,
+            'director': None,
+            'cinematographer': None,
+            'actors': None,
+        }
+
         search = tmdb.Search()
         self.matches = search.movie(query=self.input)['results']
 
@@ -62,40 +72,70 @@ class MovieWrapper:
 
 
     def getMovie(self, number):
-        """ This takes a number input by the user from the command line and then selects that movie"""
+        """ This takes a number input by the user from the command line and then selects that movie as the correct title"""
         if number.isalpha():
             raise Exception('Must enter a number')
 
         try:
             self.movie = self.matches[int(number)-1]
+
+            self.info['title'] = self.movie['id']
+            self.info['release_date'] = self.movie['release_date']
+
             self.credits = tmdb.Movies(self.matches[int(number)-1]["id"]).credits()
         except IndexError:
             raise Exception('Index out of range')
 
     def getGenres(self):
-        """ gets the genre of movie """
+        """ Gets the genre of movie """
+
         print("\n********* GENRES ************")
+        genres = []
         for genre in self.movie['genre_ids']:
+            genres.append(genre)
             print(GENRES[genre])
         print("*****************************\n")
+        self.info['genres'] = genres
 
     def getDirector(self):
-        print("********* DIRECTOR ************")
+        """ Gets the director of the movie """
+
+        print("********* DIRECTOR **********")
         for person in self.credits['crew']:
             if person['job'] == "Director":
-                print(f"Director: {person['name']}")
+                print(f"{person['name']}")
                 print("*****************************\n")
+                self.info['director'] = person['id']
+                return
+
+    def getCinematorgrapher(self):
+        """ Gets the cinematographer ('Director of Photography') of the movie """
+
+        print("****** CINEMATOGRAPHER ******")
+        for person in self.credits['crew']:
+            if person['job'] == "Director of Photography":
+                print(f"{person['name']}")
+                print("*****************************\n")
+                self.info['cinematographer'] = person['id']
                 return
 
     def getActors(self):
+        """ Gets the first 5 returned actors of the movie
+            NOTE: this does not mean the 5 most popular or most "significant" actors in the movie
+        """
         print("********* ACTORS ************")
+        actors = []
         for i, character in enumerate(self.credits['cast']):
             if i < 5:
                 print(character['name'])
+                actors.append(character['id'])
             else:
                 print("*****************************\n")
+                self.info['actors'] = actors
                 return
 
-#
-# item = Wrapper('Finding Nemo')
-# print(item)
+    def getInfo(self):
+        """ Returns info about the movie in JSON format
+        """
+        print(self.info)
+        print('\n')
