@@ -1,0 +1,21 @@
+;;; Basic Horn Clauses
+
+(<== (sameDirector ?movie1 ?movie2)
+  (director ?movie1 ?director)
+  (director ?movie2 ?director)
+)
+
+(<== (sameCinematographer ?movie1 ?movie2)
+  (cinematographer ?movie1 ?cinematographer)
+  (cinematographer ?movie2 ?cinematographer)
+)
+
+(<== (similarGenre ?movie1 ?movie2)
+  (genre ?movie1 ?genre)
+  (genre ?movie2 ?genre)
+)
+
+(<== (similarReleaseDate ?movie1 ?movie2)
+    (movieReleaseDecade ?movie1 ?decade)
+    (movideReleaseDecade ?movie2 ?decade)
+)

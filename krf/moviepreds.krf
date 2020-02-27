@@ -1,0 +1,24 @@
+(in-microtheory Movie-Recommendation-Algorithm)
+
+(isa movieReleaseDecade Predicate)
+(arity movieReleaseDecade 2)
+(arg1isa movieReleaseDecade Movie-CW)
+(arg2isa movieReleaseDecade NumberString)
+(comment movieReleaseDecade "(movieReleaseDecade ?movie ?decade) says ?movie was released in ?decade")
+
+(isa movieCinematographer Predicate)
+(arity movieCinematographer 2)
+(arg1isa movieCinematographer Movie-CW)
+(arg2isa movieCinematographer Person)
+(comment movieCinematographer "(movieCinematographer ?movie ?cinematographer) says ?cinematographer was the director of photography for ?movie")
+
+(isa movieIsAnimated Predicate)
+(arity movieIsAnimated 1)
+(arg1isa movieIsAnimated Movie-CW)
+(comment movieIsAnimated "(movieIsAnimated ?movie) says ?movie is an animated film")
+
+(isa movieComposer Predicate)
+(arity movieComposer 2)
+(arg1isa movieComposer Movie-CW)
+(arg2isa movieComposer Person)
+(comment movieComposer "(movieComposer ?movie ?composer) says ?composer wrote the score for ?movie")
