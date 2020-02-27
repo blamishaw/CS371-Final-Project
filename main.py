@@ -15,7 +15,7 @@ def createInterface():
         movie.getDirector()
         movie.getCinematorgrapher()
         movie.getActors()
-        movie.getInfo()
+        movie.convertInfoToKBFact()
 
         user_input = input("Do you want to continue? ('y'/'n')\n")
 

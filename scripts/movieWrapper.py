@@ -1,6 +1,8 @@
 import tmdbsimple as tmdb
 import apiconfig
 
+# Dictionary to map tmdb genre ids to human-readable genres
+
 GENRES = {28: "Action",
           12: "Adventure",
           16: "Animation",
@@ -34,17 +36,21 @@ class Movie:
         self.movie = None
         self.credits = None
 
-        # All data is stored by their tmdb ids for ease of querying the API
+        # All data in self.info is stored as a tuple(movie/person.id, movie/person.name)
+        # id is stored for easy of querying tmdb API, name is stored for display/debugging purposes
+
         self.info = {
-            'title': None,
+            'title': (None, None),
             'release_date': None,
             'genres': None,
-            'director': None,
-            'cinematographer': None,
+            'director': (None, None),
+            'cinematographer': (None, None),
             'actors': None,
         }
 
         search = tmdb.Search()
+
+        # Movies with titles similar to or matching the user input string
         self.matches = search.movie(query=self.input)['results']
 
 
@@ -79,7 +85,7 @@ class Movie:
         try:
             self.movie = self.matches[int(number)-1]
 
-            self.info['title'] = self.movie['id']
+            self.info['title'] = (self.movie['id'], self.movie['original_title'])
             self.info['release_date'] = self.movie['release_date']
 
             self.credits = tmdb.Movies(self.matches[int(number)-1]["id"]).credits()
@@ -89,50 +95,76 @@ class Movie:
     def getGenres(self):
         """ Gets the genre of movie """
 
-        print("\n********* GENRES ************")
-        genres = []
-        for genre in self.movie['genre_ids']:
-            genres.append(genre)
-            print(GENRES[genre])
-        print("*****************************\n")
+        genres = [genre for genre in self.movie['genre_ids']]
+
         self.info['genres'] = genres
 
     def getDirector(self):
         """ Gets the director of the movie """
 
-        print("********* DIRECTOR **********")
         for person in self.credits['crew']:
             if person['job'] == "Director":
-                print(f"{person['name']}")
-                print("*****************************\n")
-                self.info['director'] = person['id']
+                # Store director id and name in tuple
+                self.info['director'] = (person['id'], person['name'])
                 return
 
     def getCinematorgrapher(self):
         """ Gets the cinematographer ('Director of Photography') of the movie """
 
-        print("****** CINEMATOGRAPHER ******")
         for person in self.credits['crew']:
             if person['job'] == "Director of Photography":
-                print(f"{person['name']}")
-                print("*****************************\n")
-                self.info['cinematographer'] = person['id']
+                # Store cinematographer id and name
+                self.info['cinematographer'] = (person['id'], person['name'])
                 return
+
 
     def getActors(self):
         """ Gets the first 5 returned actors of the movie
             NOTE: this does not mean the 5 most popular or most "significant" actors in the movie
         """
-        print("********* ACTORS ************")
+
         actors = []
         for i, character in enumerate(self.credits['cast']):
             if i < 5:
-                print(character['name'])
-                actors.append(character['id'])
+                # Store actor id and actor name
+                actors.append((character['id'], character['name']))
             else:
-                print("*****************************\n")
                 self.info['actors'] = actors
                 return
+
+    def convertInfoToKBFact(self):
+        """ Converts self.info into facts that can be parsed by Companions """
+
+        print('\n******** KB FACTS **********\n')
+        kb_facts = []
+        for key in self.info.keys():
+            if key == 'title':
+                fact = f'(title "{self.info[key][1]}")'
+                kb_facts.append(fact)
+            if key == 'release_date':
+                fact = f'(releaseDate "{self.info["title"][1]}" {self.info[key]})'
+                kb_facts.append(fact)
+            if key == 'genres':
+                for genre_id in self.info[key]:
+                    fact = f'(genre "{self.info["title"][1]}" {GENRES[genre_id]})'
+                    kb_facts.append(fact)
+            if key == 'director':
+                fact = f'(director "{self.info["title"][1]}" "{self.info[key][1]}"")'
+                kb_facts.append(fact)
+            if key == 'cinematographer':
+
+                # Some animated movies don't have cinematographers
+                if self.info[key][0] == None:
+                    continue
+
+                fact = f'(cinematographer "{self.info["title"][1]}" "{self.info[key][1]}"")'
+                kb_facts.append(fact)
+            if key == 'actors':
+                for actor in self.info[key]:
+                    fact = f'(actorIn "{self.info["title"][1]}" "{actor[1]}")'
+                    kb_facts.append(fact)
+        for item in kb_facts:
+            print(item)
 
     def getInfo(self):
         """ Returns info about the movie in JSON format
