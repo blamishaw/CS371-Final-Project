@@ -5,7 +5,7 @@ def createInterface():
 
     while user_input != 'n':
         user_input = input('Enter movie name:\n')
-        movie = movieWrapper.MovieWrapper(user_input)
+        movie = movieWrapper.Movie(user_input)
         if not movie.printMovies():
             return
         user_input = input('Which movie is the correct one?\n')

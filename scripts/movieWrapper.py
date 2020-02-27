@@ -23,7 +23,7 @@ GENRES = {28: "Action",
         }
 
 
-class MovieWrapper:
+class Movie:
     """ Wrapper for TMDB movie -- includes methods to get genre, director, actors, cinematographer, etc."""
 
     tmdb.API_KEY = apiconfig.API_KEY
