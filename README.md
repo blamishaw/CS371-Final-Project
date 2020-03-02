@@ -8,3 +8,6 @@ This project sources its data from the The Movie Database (TMDb). To access the 
 
 `pip install tmdbsimple`
 
+Likewise, one must get an API key from the TMDb website and store it in a file "apiconfig.py" in the main directory. This file should contain one line looking like:
+
+`API_KEY = <<your api key>>`
