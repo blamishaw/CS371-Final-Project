@@ -22,3 +22,16 @@
 (arg1isa movieComposer Movie-CW)
 (arg2isa movieComposer Person)
 (comment movieComposer "(movieComposer ?movie ?composer) says ?composer wrote the score for ?movie")
+
+
+;;; Horn clauses dealing with movie-genre types
+
+(isa HistoryMovie Collection)
+(comment HistoryMovie "HistoryMovie is a collection of instances of Movie-CW each of which relates to a historical period piece or historical fiction movie")
+
+(isa DocumentaryMovie Collection)
+(comment DocumentaryMovie "DocumentaryMovie is a collection of Movie-CWs wherein each movie is a nonfiction documentary")
+
+(isa TVMovie Collection)
+(comment TVMovie "TVMovie is a collection of Movie-CWs wherein each movie premiered on TV rather than in theatres")
+

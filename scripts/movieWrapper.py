@@ -1,4 +1,5 @@
 import tmdbsimple as tmdb
+import requests
 import apiconfig
 
 # Dictionary to map tmdb genre ids to human-readable genres
@@ -16,7 +17,7 @@ GENRES = {28: "Action",
           14: "Fantasy",
           36: "History",
           27: "Horror",
-          10402: "Music",
+          10402: "Musical",
           9648: "Mystery",
           10749: "Romance",
           878: "Science Fiction",
@@ -63,6 +64,7 @@ class Movie:
             'director': (None, None),
             'cinematographer': (None, None),
             'composer': (None, None),
+            'writer': (None, None),
             'actors': None,
         }
 
@@ -104,12 +106,22 @@ class Movie:
             # Gets the credits of the movie for use in getDirector(), getComposer(), etc.
             self.credits = tmdb.Movies(self.matches[int(number)-1]["id"]).credits()
 
-            # Calls self.getInfo() to populate the rest of the fields in self.info (i.e. director, actors, composer, etc.)
+            # Calls self.getInfo() to populate the rest of the fields in self.info (i.e. director, actors, etc.)
             self.get_info()
 
 
         except IndexError:
             raise Exception('Index out of range')
+
+    def set_movie(self, movie):
+        self.movie = movie
+
+        # Gets the credits of the movie for use in getDirector(), getComposer(), etc.
+        self.credits = tmdb.Movies(self.movie["id"]).credits()
+
+        # Calls self.getInfo() to populate the rest of the fields in self.info (i.e. director, actors, etc.)
+        self.get_info()
+
 
     def get_title(self):
         """ Adds the movie id and original title to self.info """
@@ -141,7 +153,8 @@ class Movie:
             if person['job'] == "Director of Photography":
                 # Store cinematographer id and name
                 self.info['cinematographer'] = (person['id'], person['name'])
-
+            if person['job'] == "Screenplay":
+                self.info['writer'] = (person['id'], person['name'])
 
     def get_actors(self):
         """ Gets the first 5 returned actors of the movie
@@ -171,7 +184,13 @@ class Movie:
         kb_facts.append(fact)
 
 
+
         for key in self.info.keys():
+            if not self.info[key]:
+                return []
+
+            if not self.info[key][0]:
+                continue
 
             if key == 'release_date':
                 fact = f'(movieReleaseDecade {movie_id} {self.info[key]})'
@@ -182,7 +201,7 @@ class Movie:
                     if genre_id == 16:
                         fact = f'(movieIsAnimated {movie_id})'
                     else:
-                        fact = f'(movieGenres {movie_id} {GENRES[genre_id] + "Movie"})'
+                        fact = f'(isa {movie_id} {GENRES[genre_id] + "Movie"})'
                     kb_facts.append(fact)
 
             if key == 'director':
@@ -190,19 +209,14 @@ class Movie:
                 kb_facts.append(fact)
 
             if key == 'cinematographer':
-
-                # Some animated movies don't have cinematographers
-                if self.info[key][0] == None:
-                    continue
-
                 fact = f'(movieCinematographer {movie_id} "{self.info[key][1]}")'
                 kb_facts.append(fact)
 
-            if key == 'composer':
-                # Some animated movies don't have cinematographers
-                if self.info[key][0] == None:
-                    continue
+            if key == 'writer':
+                fact = f'(movieWriter {movie_id} "{self.info[key][1]}")'
+                kb_facts.append(fact)
 
+            if key == 'composer':
                 fact = f'(movieComposer {movie_id} "{self.info[key][1]}")'
                 kb_facts.append(fact)
 
@@ -214,9 +228,20 @@ class Movie:
         return kb_facts
 
     def write_to_krf(self, kb_facts):
+        """ Writes facts returned from self.convert_info_to_kb_facts to krf file """
+
         file = open(WRITE_TO_FILE, "w")
         for fact in kb_facts:
             file.write(fact + '\n')
+        file.close()
+
+    def append_to_krf(self, kb_facts):
+        """ This function is only invoked when adding movies to moviedata.krf """
+
+        file = open("../krf/moviedata.krf", "a")
+        for fact in kb_facts:
+            file.write(fact + '\n')
+        file.write('\n\n')
         file.close()
 
     def get_info(self):
@@ -228,5 +253,27 @@ class Movie:
         self.get_crew_members()
         self.get_actors()
         kb_facts = self.convert_info_to_kb_facts()
+        # self.append_to_krf(kb_facts)
         self.write_to_krf(kb_facts)
+
+
+def get_all_movies():
+    """ Function to add more movies to our database, we have already parsed the first 100 pages of the most popular movies
+        on TMDB. This has given us over 30,000 lines of facts for our KB. Given a more scalable system, we would
+        naturally include all 500 pages of movies, but for the purposes of this assignment 100 pages is likely enough.
+    """
+
+    # This is accessed using an actual API connection as opposed to using the tmdbsimple module
+    api_key = apiconfig.API_KEY
+
+    # Start on page 101 as the first 100 pages are already included in moviedata.krf
+    page_num = 101
+
+    while page_num <= 500:
+        print(page_num)
+        response = requests.get('https://api.themoviedb.org/3/discover/movie?api_key=' + api_key + '&certification_country=US&certification.lte=G&sort_by=popularity.desc&page=' + str(page_num))
+        all_movies = response.json()
+        for movie in all_movies['results']:
+            wrapped_movie = Movie(movie).set_movie(movie)
+        page_num += 1
 

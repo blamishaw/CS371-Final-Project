@@ -10,6 +10,11 @@
   (cinematographer ?movie2 ?cinematographer)
 )
 
+(<== (sameComposer ?movie1 ?movie2)
+    (composer ?movie1 ?composer)
+    (composer ?movie2 ?composer)
+)
+
 (<== (similarGenre ?movie1 ?movie2)
   (genre ?movie1 ?genre)
   (genre ?movie2 ?genre)
@@ -17,5 +22,10 @@
 
 (<== (similarReleaseDate ?movie1 ?movie2)
     (movieReleaseDecade ?movie1 ?decade)
-    (movideReleaseDecade ?movie2 ?decade)
+    (movieReleaseDecade ?movie2 ?decade)
+)
+
+(<== (similarAesthetic ?movie1 ?movie2)
+    (similarGenre ?movie1 ?movie2)
+    (sameCinematographer ?movie1 ?movie2)
 )
