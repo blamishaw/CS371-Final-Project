@@ -9446,3 +9446,18 @@
 
 
 
+(isa tmdb24 Movie-CW)
+(movieTitleString tmdb24 "Kill Bill: Vol. 1")
+(movieReleaseDecade tmdb24 2000)
+(isa tmdb24 ActionMovie)
+(isa tmdb24 CrimeMovie)
+(movieDirector tmdb24 "Quentin Tarantino")
+(movieCinematographer tmdb24 "Robert Richardson")
+(movieComposer tmdb24 "RZA")
+(movieActors tmdb24 "Uma Thurman")
+(movieActors tmdb24 "Lucy Liu")
+(movieActors tmdb24 "Vivica A. Fox")
+(movieActors tmdb24 "Daryl Hannah")
+(movieActors tmdb24 "David Carradine")
+
+
