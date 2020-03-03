@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f9a97bf-f73b-4ff4-a9a2-f19574f4482b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/scripts/macros.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/krf/hornClauses.krf" beforeDir="false" afterPath="$PROJECT_DIR$/krf/hornClauses.krf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/CS371-Final-Project.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/krf/moviedata.krf" beforeDir="false" afterPath="$PROJECT_DIR$/krf/moviedata.krf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/movieWrapper.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/movieWrapper.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,7 +17,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/movieWrapper.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="131">
@@ -27,7 +29,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scripts/macros.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-177">
@@ -39,7 +41,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/krf/moviedata.krf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
+            <state relative-caret-position="417">
               <caret line="9445" selection-start-line="9445" selection-end-line="9445" />
             </state>
           </provider>
@@ -126,9 +128,9 @@
         <option value="$PROJECT_DIR$/krf/moviefacts.krf" />
         <option value="$PROJECT_DIR$/krf/moviepreds.krf" />
         <option value="$PROJECT_DIR$/krf/hornClauses.krf" />
-        <option value="$PROJECT_DIR$/krf/moviedata.krf" />
         <option value="$PROJECT_DIR$/scripts/macros.py" />
         <option value="$PROJECT_DIR$/scripts/movieWrapper.py" />
+        <option value="$PROJECT_DIR$/krf/moviedata.krf" />
       </list>
     </option>
   </component>
@@ -142,11 +144,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="17" />
-    <option name="y" value="23" />
-    <option name="width" value="1680" />
-    <option name="height" value="1027" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="199" />
+    <option name="y" value="60" />
+    <option name="width" value="1280" />
+    <option name="height" value="697" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -178,6 +180,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -249,15 +252,15 @@
       <workItem from="1583002308521" duration="119000" />
       <workItem from="1583165135515" duration="4738000" />
       <workItem from="1583265798753" duration="3148000" />
-      <workItem from="1583272948278" duration="1892000" />
+      <workItem from="1583272948278" duration="2305000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28000000" />
+    <option name="totallyTimeSpent" value="28413000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="697" extended-state="6" />
+    <frame x="199" y="60" width="1280" height="697" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14701131" />
@@ -336,9 +339,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/movieWrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="90" column="30" selection-start-line="90" selection-start-column="30" selection-end-line="90" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/krf/moviedata.krf">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
+        <state relative-caret-position="417">
           <caret line="9445" selection-start-line="9445" selection-end-line="9445" />
         </state>
       </provider>
@@ -347,16 +360,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-177">
           <caret line="3" column="59" selection-start-line="3" selection-start-column="59" selection-end-line="3" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/movieWrapper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="90" column="30" selection-start-line="90" selection-start-column="30" selection-end-line="90" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
