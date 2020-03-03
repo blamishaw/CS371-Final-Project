@@ -1,4 +1,4 @@
-(in-microtheory MovieAlgiorithmMt)
+(in-microtheory MovieAlgorithmMt)
 
 ;;; Basic Horn Clauses
 
@@ -15,6 +15,11 @@
 (<== (sameComposer ?movie1 ?movie2)
     (movieComposer ?movie1 ?composer)
     (movieComposer ?movie2 ?composer)
+)
+
+(<== (sameWriter ?movie1 ?movie2)
+    (movieWriter ?movie1 ?writer)
+    (movieWriter ?movie2 ?writer)
 )
 
 (<== (oneSameActor ?movie1 ?movie2 ?actor)
@@ -41,3 +46,14 @@
     (similarGenre ?movie1 ?movie2)
     (sameCinematographer ?movie1 ?movie2)
 )
+
+(<== (similarPlot ?movie1 ?movie2)
+    (sameWriter ?movie1 ?movie2)
+    (similarGenre ?movie1 ?movie2)
+)
+
+(<== (kidFriendly ?movie1)
+    (movieIsAnimated ?movie1)
+    (isa ?movie1 FamilyMovie)
+)
+

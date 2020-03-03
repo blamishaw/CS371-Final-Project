@@ -9442,20 +9442,7 @@
 (movieActors tmdb28178 "Cary-Hiroyuki Tagawa")
 (movieActors tmdb28178 "Sarah Roemer")
 
+;;; These are added every time the script is run -- delete before real use
 
-(isa tmdb12 Movie-CW)
-(movieTitleString tmdb12 "Finding Nemo")
-(movieReleaseDecade tmdb12 2000)
-(movieIsAnimated tmdb12)
-(isa tmdb12 FamilyMovie)
-(movieDirector tmdb12 "Andrew Stanton")
-(movieCinematographer tmdb12 "Sharon Calahan")
-(movieComposer tmdb12 "Thomas Newman")
-(movieWriter tmdb12 "David Reynolds")
-(movieActors tmdb12 "Albert Brooks")
-(movieActors tmdb12 "Ellen DeGeneres")
-(movieActors tmdb12 "Alexander Gould")
-(movieActors tmdb12 "Willem Dafoe")
-(movieActors tmdb12 "Brad Garrett")
 
 

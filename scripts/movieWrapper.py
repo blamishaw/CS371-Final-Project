@@ -1,48 +1,7 @@
 import tmdbsimple as tmdb
 import requests
 import apiconfig
-
-# Dictionary to map tmdb genre ids to human-readable genres
-
-WRITE_TO_FILE = "krf/moviefacts.krf"
-APPEND_TO_FILE = "krf/moviedata.krf"
-
-GENRES = {28: "Action",
-          12: "Adventure",
-          16: "Animation",
-          35: "Comedy",
-          80: "Crime",
-          99: "Documentary",
-          18: "Drama",
-          10751: "Family",
-          14: "Fantasy",
-          36: "History",
-          27: "Horror",
-          10402: "Musical",
-          9648: "Mystery",
-          10749: "Romance",
-          878: "ScienceFiction",
-          10770: "TVMovie",
-          53: "Thriller",
-          10752: "War",
-          37: "Western",
-        }
-
-DECADES = {
-    "11": "1910",
-    "12": "1920",
-    "13": "1930",
-    "14": "1940",
-    "15": "1950",
-    "16": "1960",
-    "17": "1970",
-    "18": "1980",
-    "19": "1990",
-    "20": "2000",
-    "21": "2010",
-    "22": "2020",
-}
-
+from . import macros
 
 class Movie:
     """ Wrapper for TMDb movie -- includes methods to get genre, director, actors, cinematographer, etc."""
@@ -132,7 +91,7 @@ class Movie:
     def get_release_decade(self):
         """ Gets the decade the movie was released in and stores in self.info """
 
-        release_decade = DECADES[self.movie['release_date'][0] + self.movie['release_date'][2]]
+        release_decade = macros.DECADES[self.movie['release_date'][0] + self.movie['release_date'][2]]
         self.info['release_date'] = release_decade
 
     def get_genres(self):
@@ -204,7 +163,7 @@ class Movie:
                     if genre_id == 16:
                         fact = f'(movieIsAnimated {companions_id})'
                     else:
-                        fact = f'(isa {companions_id} {GENRES[genre_id] + "Movie"})'
+                        fact = f'(isa {companions_id} {macros.GENRES[genre_id] + "Movie"})'
                     kb_facts.append(fact)
 
             if key == 'director':
@@ -230,10 +189,33 @@ class Movie:
 
         return kb_facts
 
+    def get_reasoning_criteria(self):
+        """ Get reasoning criteria to input to companions """
+
+        print('***************************')
+        user_pref = int(input('''
+What is your favorite aspect of the movie?
+1. Aesthetic - The look and feel of the movie
+2. Plot - What happens in the movie
+3. Style - The general direction and genre of the movie
+4. Cast - The actors in the movie
+5. Family Friendly - The movie can be watched by everyone
+(please enter a number 1-5)
+        \n'''))
+
+        if not isinstance(user_pref, int):
+            raise Exception("You did not enter a number")
+
+        try:
+            return macros.REASONING_CRITERIA[user_pref-1]
+        except IndexError:
+            raise IndexError('Number entered is too large')
+
+
     def write_to_krf(self, kb_facts):
         """ Writes facts returned from self.convert_info_to_kb_facts to krf file """
 
-        file = open(WRITE_TO_FILE, "w")
+        file = open(macros.WRITE_TO_FILE, "w")
         for fact in kb_facts:
             file.write(fact + '\n')
         file.close()
@@ -241,7 +223,7 @@ class Movie:
     def append_to_krf(self, kb_facts):
         """ This function is only invoked when adding movies to moviedata.krf """
 
-        file = open(APPEND_TO_FILE, "a")
+        file = open(macros.APPEND_TO_FILE, "a")
         for fact in kb_facts:
             file.write(fact + '\n')
         file.write('\n\n')
@@ -257,7 +239,8 @@ class Movie:
         self.get_actors()
         kb_facts = self.convert_info_to_kb_facts()
         self.append_to_krf(kb_facts)
-        print(f"Copy and paste to Companions: (recommendMovie {'tmdb' + str(self.info['title'][0])} ?movie2)")
+        user_pref = self.get_reasoning_criteria()
+        print(f"\nCopy and paste to Companions: ({user_pref} {'tmdb' + str(self.info['title'][0])} ?movie2)\n")
 
 
         # self.write_to_krf(kb_facts)
