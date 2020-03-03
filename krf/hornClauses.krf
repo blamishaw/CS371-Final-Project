@@ -1,23 +1,35 @@
+(in-microtheory MovieAlgiorithmMt)
+
 ;;; Basic Horn Clauses
 
 (<== (sameDirector ?movie1 ?movie2)
-  (director ?movie1 ?director)
-  (director ?movie2 ?director)
+  (movieDirector ?movie1 ?director)
+  (movieDirector ?movie2 ?director)
 )
 
 (<== (sameCinematographer ?movie1 ?movie2)
-  (cinematographer ?movie1 ?cinematographer)
-  (cinematographer ?movie2 ?cinematographer)
+  (movieCinematographer ?movie1 ?cinematographer)
+  (movieCinematographer ?movie2 ?cinematographer)
 )
 
 (<== (sameComposer ?movie1 ?movie2)
-    (composer ?movie1 ?composer)
-    (composer ?movie2 ?composer)
+    (movieComposer ?movie1 ?composer)
+    (movieComposer ?movie2 ?composer)
+)
+
+(<== (oneSameActor ?movie1 ?movie2 ?actor)
+    (movieActors ?movie1 ?actor)
+    (movieActors ?movie2 ?actor)
+)
+
+(<== (similarCast ?movie1 ?movie2)
+    (oneSameActor ?movie1 ?movie2 ?actor1)
+    (oneSameActor ?movie1 ?movie2 ?actor2)
 )
 
 (<== (similarGenre ?movie1 ?movie2)
-  (genre ?movie1 ?genre)
-  (genre ?movie2 ?genre)
+  (isa ?movie1 ?genre-movie)
+  (isa ?movie2 ?genre-movie)
 )
 
 (<== (similarReleaseDate ?movie1 ?movie2)

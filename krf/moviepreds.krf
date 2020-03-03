@@ -1,4 +1,4 @@
-(in-microtheory Movie-Recommendation-Algorithm)
+(in-microtheory MovieAlgorithmMt)
 
 (isa movieReleaseDecade Predicate)
 (arity movieReleaseDecade 2)
@@ -23,6 +23,12 @@
 (arg2isa movieComposer Person)
 (comment movieComposer "(movieComposer ?movie ?composer) says ?composer wrote the score for ?movie")
 
+(isa movieWriter Predicate)
+(arity movieWriter 2)
+(arg1isa movieWriter Movie-CW)
+(arg2isa movieWriter Person)
+(comment movieWriter "(movieWriter ?movie ?writer) says ?writer wrote the script for ?movie")
+
 
 ;;; Horn clauses dealing with movie-genre types
 
@@ -34,4 +40,3 @@
 
 (isa TVMovie Collection)
 (comment TVMovie "TVMovie is a collection of Movie-CWs wherein each movie premiered on TV rather than in theatres")
-
