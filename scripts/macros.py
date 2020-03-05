@@ -1,5 +1,5 @@
 WRITE_TO_FILE = "krf/moviefacts.krf"
-APPEND_TO_FILE = "krf/moviedata.krf"
+APPEND_TO_FILE = "../krf/moviedata.krf"
 
 # Dictionary to map tmdb genre ids to human-readable genres
 GENRES = {28: "Action",

@@ -1,5 +1,11 @@
 (in-microtheory MovieAlgorithmMt)
 
+(isa movieGenre Predicate)
+(arity movieGenre 2)
+(arg1isa movieGenre Movie-CW)
+(arg2isa movieGenre MovieTypeByGenre)
+(comment movieGenre "(movieGenre ?movie ?genre) says MOVIE is of the type GENRE")
+
 (isa movieReleaseDecade Predicate)
 (arity movieReleaseDecade 2)
 (arg1isa movieReleaseDecade Movie-CW)

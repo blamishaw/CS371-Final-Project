@@ -1,7 +1,7 @@
 import tmdbsimple as tmdb
 import requests
 import apiconfig
-from . import macros
+from scripts import macros
 
 class Movie:
     """ Wrapper for TMDb movie -- includes methods to get genre, director, actors, cinematographer, etc."""
@@ -100,21 +100,33 @@ class Movie:
         genres = [genre for genre in self.movie['genre_ids']]
         self.info['genres'] = genres
 
+    def format_name(self, name):
+        """ Function to create a companions-readable name given a name string """
+
+        if name == "":
+            return name
+        return "".join(name.split(' '))
+
+
     def get_crew_members(self):
         """ Gets the director, cinematographer, and composer of the movie """
 
         for person in self.credits['crew']:
             if person['job'] == "Director":
+                name = self.format_name(person['name'])
                 # Store director id and name in tuple
-                self.info['director'] = (person['id'], person['name'])
+                self.info['director'] = (person['id'], name)
             if person['job'] == "Original Music Composer":
+                name = self.format_name(person['name'])
                 # Store composer id and name
-                self.info['composer'] = (person['id'], person['name'])
+                self.info['composer'] = (person['id'], name)
             if person['job'] == "Director of Photography":
+                name = self.format_name(person['name'])
                 # Store cinematographer id and name
-                self.info['cinematographer'] = (person['id'], person['name'])
+                self.info['cinematographer'] = (person['id'], name)
             if person['job'] == "Screenplay":
-                self.info['writer'] = (person['id'], person['name'])
+                name = self.format_name(person['name'])
+                self.info['writer'] = (person['id'], name)
 
     def get_actors(self):
         """ Gets the first 5 returned actors of the movie
@@ -123,9 +135,10 @@ class Movie:
 
         actors = []
         for i, character in enumerate(self.credits['cast']):
+            name = self.format_name(character['name'])
             if i < 5:
                 # Store actor id and actor name
-                actors.append((character['id'], character['name']))
+                actors.append((character['id'], name))
             else:
                 self.info['actors'] = actors
                 return
@@ -163,28 +176,28 @@ class Movie:
                     if genre_id == 16:
                         fact = f'(movieIsAnimated {companions_id})'
                     else:
-                        fact = f'(isa {companions_id} {macros.GENRES[genre_id] + "Movie"})'
+                        fact = f'(movieGenre {companions_id} {macros.GENRES[genre_id]})'
                     kb_facts.append(fact)
 
             if key == 'director':
-                fact = f'(movieDirector {companions_id} "{self.info[key][1]}")'
+                fact = f'(movieDirector {companions_id} {self.info[key][1]})'
                 kb_facts.append(fact)
 
             if key == 'cinematographer':
-                fact = f'(movieCinematographer {companions_id} "{self.info[key][1]}")'
+                fact = f'(movieCinematographer {companions_id} {self.info[key][1]})'
                 kb_facts.append(fact)
 
             if key == 'writer':
-                fact = f'(movieWriter {companions_id} "{self.info[key][1]}")'
+                fact = f'(movieWriter {companions_id} {self.info[key][1]})'
                 kb_facts.append(fact)
 
             if key == 'composer':
-                fact = f'(movieComposer {companions_id} "{self.info[key][1]}")'
+                fact = f'(movieComposer {companions_id} {self.info[key][1]})'
                 kb_facts.append(fact)
 
             if key == 'actors':
                 for actor in self.info[key]:
-                    fact = f'(movieActors {companions_id} "{actor[1]}")'
+                    fact = f'(movieActors {companions_id} {actor[1]})'
                     kb_facts.append(fact)
 
         return kb_facts
@@ -239,8 +252,8 @@ What is your favorite aspect of the movie?
         self.get_actors()
         kb_facts = self.convert_info_to_kb_facts()
         self.append_to_krf(kb_facts)
-        user_pref = self.get_reasoning_criteria()
-        print(f"\nCopy and paste to Companions: ({user_pref} {'tmdb' + str(self.info['title'][0])} ?movie2)\n")
+        # user_pref = self.get_reasoning_criteria()
+        # print(f"\nCopy and paste to Companions: ({user_pref} {'tmdb' + str(self.info['title'][0])} ?movie2)\n")
 
 
         # self.write_to_krf(kb_facts)
@@ -259,10 +272,12 @@ def get_all_movies():
     # Start on page 101 as the first 100 pages are already included in moviedata.krf
     page_num = 1
 
-    while page_num <= 500:
+    while page_num <= 15:
         print(page_num)
         response = requests.get('https://api.themoviedb.org/3/discover/movie?api_key=' + api_key + '&certification_country=US&certification.lte=G&sort_by=popularity.desc&page=' + str(page_num))
         all_movies = response.json()
         for movie in all_movies['results']:
             Movie(movie).set_movie(movie)
         page_num += 1
+
+get_all_movies()
