@@ -32,13 +32,15 @@
     (different ?movie1 ?movie2)
 )
 
-(<== (similarCast ?movie1 ?movie2)
+(<== (similarCast ?movie1 ?title)
     (oneSameActor ?movie1 ?movie2 ?actor1)
     (oneSameActor ?movie1 ?movie2 ?actor2)
-    (different ?movie1 ?movie2)
+    (different ?actor1 ?actor2)
+    (movieTitleString ?movie2 ?title)
 )
 
 (<== (similarGenre ?movie1 ?movie2)
+    (not (movieGenre ?movie1 Family))
     (movieGenre ?movie1 ?genre1)
     (movieGenre ?movie2 ?genre1)
     (movieGenre ?movie1 ?genre2)
@@ -46,6 +48,12 @@
     (different ?genre1 ?genre2)
     (different ?movie1 ?movie2)
 )
+
+(<== (similarGenre ?movie1 ?movie2)
+    (movieGenre ?movie1 Family)
+    (movieGenre ?movie2 Family)
+)
+
 
 (<== (similarReleaseDate ?movie1 ?movie2)
     (movieReleaseDecade ?movie1 ?decade)
@@ -70,21 +78,24 @@
 (<== (similarStyle ?movie1 ?title)
     (sameDirector ?movie1 ?movie2)
     (similarGenre ?movie1 ?movie2)
+    (similarReleaseDecade ?movie1 ?movie2)
     (different ?movie1 ?movie2)
     (movieTitleString ?movie2 ?title)
 )
 
-(<== (similarStyle ?movie1 ?title)
-    (movieTitleString ?movie2 ?title)
+(<== (similarDirection ?movie1 ?title)
     (sameDirector ?movie1 ?movie2)
     (similarGenre ?movie1 ?movie2)
     (different ?movie1 ?movie2)
+    (movieTitleString ?movie2 ?title)
 )
 
-
-
-(<== (kidFriendly ?movie1)
-    (movieIsAnimated ?movie1)
+(<== (isFamilyFriendly ?movie1 ?title)
     (movieGenre ?movie1 Family)
+    (movieGenre ?movie2 Family)
+    (isAnimated ?movie2)
+    (different ?movie1 ?movie2)
+    (movieTitleString ?movie2 ?title)
 )
+
 

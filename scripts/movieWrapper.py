@@ -210,7 +210,7 @@ class Movie:
 What is your favorite aspect of the movie?
 1. Aesthetic - The look and feel of the movie
 2. Plot - What happens in the movie
-3. Style - The general direction and genre of the movie
+3. Direction - The entire vision of the movie
 4. Cast - The actors in the movie
 5. Family Friendly - The movie can be watched by everyone
 (please enter a number 1-5)
@@ -251,9 +251,11 @@ What is your favorite aspect of the movie?
         self.get_crew_members()
         self.get_actors()
         kb_facts = self.convert_info_to_kb_facts()
-        self.append_to_krf(kb_facts)
-        # user_pref = self.get_reasoning_criteria()
-        # print(f"\nCopy and paste to Companions: ({user_pref} {'tmdb' + str(self.info['title'][0])} ?movie2)\n")
+        self.write_to_krf(kb_facts)
+        #self.append_to_krf(kb_facts)
+        user_pref = self.get_reasoning_criteria()
+        print("\nLoad moviefacts.krf as a flat-file to Companions then:")
+        print(f"Query to input in Companions: ({user_pref} {'tmdb' + str(self.info['title'][0])} ?movie2)\n")
 
 
         # self.write_to_krf(kb_facts)
@@ -270,9 +272,9 @@ def get_all_movies():
     api_key = apiconfig.API_KEY
 
     # Start on page 101 as the first 100 pages are already included in moviedata.krf
-    page_num = 1
+    page_num = 31
 
-    while page_num <= 15:
+    while page_num <= 45:
         print(page_num)
         response = requests.get('https://api.themoviedb.org/3/discover/movie?api_key=' + api_key + '&certification_country=US&certification.lte=G&sort_by=popularity.desc&page=' + str(page_num))
         all_movies = response.json()
@@ -280,4 +282,3 @@ def get_all_movies():
             Movie(movie).set_movie(movie)
         page_num += 1
 
-get_all_movies()
