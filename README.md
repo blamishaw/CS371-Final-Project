@@ -30,7 +30,7 @@ To answer this question, we devised five qualities people use to determine simil
 
 ## Getting Started
 
-###1. TMDb
+### 1. TMDb
 To access the TMDb API as efficiently as possible we made use of the tmdbsimple Python module which can be downloaded as such:
 
 `pip install tmdbsimple`
@@ -41,7 +41,7 @@ Likewise, one must get an API key from the TMDb website and store it in a file "
 
 API keys can be obtained [here](https://developers.themoviedb.org/3/getting-started/introduction).
 
-###2. Companions
+### 2. Companions
 
 Our algorithm makes use of the Companions' interaction-manager to reason about movie similarity. That being said, Companions
 needs a lot of movie data to even reason about in the first place, therefore we have provided a list of several
