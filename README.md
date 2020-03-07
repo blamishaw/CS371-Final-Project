@@ -18,12 +18,12 @@ To answer this question, we devised five qualities people use to determine simil
 
 ## Project Structure
 
-####Sub-Directories
+#### Sub-Directories
 * **krf**: The rules and predicates of the project
 * **moviedata**: The knowledge base storing several hundred movies
 * **scripts**: Python scripts to query the TMDb API, clean retrieved data, and store it in krf files
 
-####Main Directory
+#### Main Directory
 * main.py: Python script to run the command line interface and parse user input
 * To be created by user: apiconfig.py -- stores the TMDb API key
 
