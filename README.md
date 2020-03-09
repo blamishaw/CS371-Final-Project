@@ -1,5 +1,10 @@
 # CS371-Final-Project
 
+## Team Members
+Brendan Lamishaw, Annika Amlie, Gianna Chan
+
+## Project Description
+
 Our goal, to create a movie recommendation algorithm using knowledge representation and reasoning. 
 
 Our data, sourced from The Movie Database (TMDb), consists only of objective facts about a given movie. 
@@ -37,7 +42,7 @@ To access the TMDb API as efficiently as possible we made use of the tmdbsimple 
 
 Likewise, one must get an API key from the TMDb website and store it in a file "apiconfig.py" in the main directory. This file should contain one line of the form:
 
-`API_KEY = <<your api key>>`
+`API_KEY = "<<your api key>>"`
 
 API keys can be obtained [here](https://developers.themoviedb.org/3/getting-started/introduction).
 
@@ -74,5 +79,13 @@ and then paste the query returned by the command-line into the query box.
 
 Naturally, the data for some movies is too unique for the algorithm – our database just isn't large enough. For many 
 movies however, Companions should return one or more movies that meet the required similarity definition.
+
+## Recommended Queries
+
+We have selected a few queries we believe highlight the algorithm. The movie names in quotations are not valid queries to Companions but instead illustrate what the user searched in the command line.
+
+**(similarAesthetic "1917" ?movie2)** yields movies with similar cinematography and theme to 1917 (e.g. "Sicario")
+
+**(similarCast "Pineapple Express" ?movie2)** yields movies with the beloved Rogen-Franco duo and company (e.g. "The Interview")
 
 
