@@ -66,13 +66,13 @@ To begin, open a new terminal window, navigate to the repository, and enter:
 After you have followed the prompts and received a Companions query there are two steps you must take:
 
 1. Navigate to the "krf" directory and load "moviefacts.krf" into Companions. This ensures that
-whatever movie you have selected is in the Companions database, regardless of if it was in the moviedata files
-you initially uploaded.
+whatever movie you have selected is in the Companions database, regardless of if it was in the movie-data files
+we have provided.
 
 2. Open the Companions Interaction-Manager and navigate to the Query page. In the context field, enter "MovieAlgorithmMt" 
 and then paste the query returned by the command-line into the query box.
 
-Naturally, some movies do not meet certain standards for the algorithm – our database just isn't large enough. For many 
+Naturally, the data for some movies is too unique for the algorithm – our database just isn't large enough. For many 
 movies however, Companions should return one or more movies that meet the required similarity definition.
 
 
