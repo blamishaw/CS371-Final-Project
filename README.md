@@ -3,7 +3,7 @@
 ## Team Members
 Brendan Lamishaw, Annika Amlie, Gianna Chan
 
-## Project Descriptions
+## Project Description
 
 Our goal, to create a movie recommendation algorithm using knowledge representation and reasoning. 
 
