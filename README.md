@@ -84,8 +84,8 @@ movies however, Companions should return one or more movies that meet the requir
 
 We have selected a few queries we believe highlight the algorithm. The movie names in quotations are not valid queries to Companions but instead illustrate what the user searched in the command line.
 
-**(similarAesthetic "1917" ?movie2) yields movies with similar cinematography and theme to 1917 (e.g. "Sicario")**
+**(similarAesthetic "1917" ?movie2)** yields movies with similar cinematography and theme to 1917 (e.g. "Sicario")
 
-**(similarCast "Pineapple Express" ?movie2) yields movies with the beloved Rogen-Franco duo and company (e.g. "The Interview")**
+**(similarCast "Pineapple Express" ?movie2)** yields movies with the beloved Rogen-Franco duo and company (e.g. "The Interview")
 
 
