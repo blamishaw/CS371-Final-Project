@@ -45,6 +45,13 @@
     (different ?movie1 ?movie2)
 )
 
+(<== (similarGenreNotFamily ?movie1 ?movie2)
+    (movieGenre ?movie1 ?genre)
+    (different ?genre Family)
+    (movieGenre ?movie2 ?genre)
+    (different ?movie1 ?movie2)
+)
+
 (<== (similarReleaseDate ?movie1 ?movie2)
     (movieReleaseDecade ?movie1 ?decade)
     (movieReleaseDecade ?movie2 ?decade)
@@ -85,6 +92,7 @@
     (movieGenre ?movie1 Family)
     (movieGenre ?movie2 Family)
     (movieIsAnimated ?movie2)
+    (similarGenreNotFamily ?movie1 ?movie2)
     (different ?movie1 ?movie2)
     (movieTitleString ?movie2 ?title)
 )

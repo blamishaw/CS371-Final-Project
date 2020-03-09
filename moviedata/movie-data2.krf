@@ -1289,6 +1289,7 @@
 (movieReleaseDecade tmdb73723 2010)
 (movieIsAnimated tmdb73723)
 (movieGenre tmdb73723 Family)
+(movieGenre tmdb73723 Adventure)
 (movieDirector tmdb73723 ChrisRenaud)
 (movieComposer tmdb73723 JohnPowell)
 (movieActors tmdb73723 ZacEfron)
