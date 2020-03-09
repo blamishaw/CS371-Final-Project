@@ -252,9 +252,9 @@ What is your favorite aspect of the movie?
         self.get_actors()
         kb_facts = self.convert_info_to_kb_facts()
         self.write_to_krf(kb_facts)
-        #self.append_to_krf(kb_facts)
+        # self.append_to_krf(kb_facts)
         user_pref = self.get_reasoning_criteria()
-        print("\nLoad moviefacts.krf as a flat-file to Companions then:")
+        print("\nLoad moviefacts.krf as a flat-file to Companions then:\n")
         print(f"Query to input in Companions: ({user_pref} {'tmdb' + str(self.info['title'][0])} ?movie2)\n")
 
 
