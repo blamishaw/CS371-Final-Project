@@ -229,6 +229,7 @@ What is your favorite aspect of the movie?
         """ Writes facts returned from self.convert_info_to_kb_facts to krf file """
 
         file = open(macros.WRITE_TO_FILE, "w")
+        file.write('(in-microtheory MovieAlgorithmMt)\n\n')
         for fact in kb_facts:
             file.write(fact + '\n')
         file.close()
